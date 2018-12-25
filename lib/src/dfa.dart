@@ -13,6 +13,8 @@ class DFA {
   DFA(Set<State> states, Set<String> inputAlphabet, Set<TransitionFunction> transitionFunctions, State startState,
       Set<State> acceptStates) {
     _states = states;
+
+    _validateInputAlphabet(inputAlphabet);
     _inputAlphabet = inputAlphabet;
 
     _validateTransitionFunctions(transitionFunctions);
@@ -23,6 +25,16 @@ class DFA {
 
     _validateAcceptStates(acceptStates);
     _acceptStates = acceptStates;
+  }
+
+  void _validateInputAlphabet(Set<String> inputAlphabet) {
+    inputAlphabet.forEach(_validateAsCharacter);
+  }
+
+  void _validateAsCharacter(String s) {
+    if (s.isEmpty || s.length > 1) {
+      throw ArgumentError('input must be a valid character');
+    }
   }
 
   void _validateTransitionFunctions(Set<TransitionFunction> transitionFunctions) {
@@ -40,6 +52,8 @@ class DFA {
   }
 
   void _validateTransitionFunctionInputCharacter(String inputCharacter) {
+    _validateAsCharacter(inputCharacter);
+
     if (!_inputAlphabet.contains(inputCharacter)) {
       throw ArgumentError('input character must be in the set of input alphabet');
     }
