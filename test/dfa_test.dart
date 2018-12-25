@@ -39,6 +39,10 @@ void main() {
         acceptStates = Set<State>.from([state3]);
       });
 
+      it('should not throw exceptions if arguments are well-formed', () {
+        DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
+      });
+
       it('should throw exception if input alphabet contains empty string', () {
         var emptyString = '';
 
@@ -57,6 +61,10 @@ void main() {
         expect(() {
           DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
         }, throwsArgumentError);
+      });
+
+      it('should throw exception if transition functions contains invalid transition', () {
+        // TODO
       });
     });
   });
