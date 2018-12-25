@@ -1,0 +1,12 @@
+name: dart_dfa
+description: Minimal Deterministic Finite Automata implementation in Dart.
+version: 1.0.0
+homepage: https://github.com/jieyouxu/dart-dfa
+author: 许杰友 Jieyou Xu (Joe) <https://github.com/jieyouxu/dart-dfa>
+
+environment:
+  sdk: '>=2.1.0 <3.0.0'
+
+dev_dependencies:
+  test: ^1.0.0
+  bdd_test_style: ^1.0.0
