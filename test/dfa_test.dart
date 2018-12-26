@@ -43,14 +43,18 @@ void main() {
         DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
       });
 
+      void expectArgumentErrorToBeThrown() {
+        expect(() {
+          DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
+        }, throwsArgumentError);
+      }
+
       it('should throw exception if input alphabet contains empty string', () {
         var emptyString = '';
 
         inputAlphabet.add(emptyString);
 
-        expect(() {
-          DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
-        }, throwsArgumentError);
+        expectArgumentErrorToBeThrown();
       });
 
       it('should throw exception if input alphabet contains non-character strings', () {
@@ -58,14 +62,48 @@ void main() {
 
         inputAlphabet.add(stringNotCharacter);
 
-        expect(() {
-          DFA(states, inputAlphabet, transitionFunctions, startState, acceptStates);
-        }, throwsArgumentError);
+        expectArgumentErrorToBeThrown();
       });
 
-      it('should throw exception if transition functions contains invalid transition', () {
-        // TODO
+      it('should throw exception if transition functions contains invalid current state', () {
+        var invalidCurrentState = State('qq');
+        var invalidTransitionFunction = TransitionFunction(invalidCurrentState, 'A', states.elementAt(1));
+        transitionFunctions.add(invalidTransitionFunction);
+
+        expectArgumentErrorToBeThrown();
+      });
+
+      it('should throw exception if transition functions contains invalid next state', () {
+        var invalidNextState = State('qq');
+        var invalidTransitionFunction = TransitionFunction(states.elementAt(1), 'A', invalidNextState);
+        transitionFunctions.add(invalidTransitionFunction);
+
+        expectArgumentErrorToBeThrown();
+      });
+
+      it('should throw exception if transition functions contains invalid input character', () {
+        var invalidNextState = State('qq');
+        var invalidTransitionFunction = TransitionFunction(states.elementAt(1), 'Z', invalidNextState);
+        transitionFunctions.add(invalidTransitionFunction);
+
+        expectArgumentErrorToBeThrown();
+      });
+
+      it('should throw exception if start state is invalid', () {
+        var invalidStartState = State('INVALID');
+        startState = invalidStartState;
+
+        expectArgumentErrorToBeThrown();
+      });
+
+      it('should throw exception if accept state is invalid', () {
+        var invalidAcceptState = State('INVALID');
+        acceptStates.add(invalidAcceptState);
+
+        expectArgumentErrorToBeThrown();
       });
     });
   });
 }
+
+
